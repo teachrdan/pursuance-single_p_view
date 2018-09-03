@@ -5,6 +5,7 @@ window.d3 = d3
 // magic numbers, all in pixels
 const height = 750
 const width = 1000
+let counter = 1
 
 // append the svg object to the page
 let svg = d3.select('#canvas').append('svg:svg')
@@ -36,7 +37,8 @@ let createNodes = function (numNodes, OrbitNumber) {
     x = ((firstOrbitRadius + (distanceBetweenOrbits * OrbitNumber)) * Math.cos(angle)) + (width / 2)
      // Calculate the y position of the element.
     y = ((firstOrbitRadius + (distanceBetweenOrbits * OrbitNumber)) * Math.sin(angle)) + (height / 2)
-    nodes.push({'id': i, 'x': x, 'y': y})
+    nodes.push({'id': i, 'x': x, 'y': y, 'index': counter})
+    counter++
   }
   return nodes
 }
@@ -50,6 +52,12 @@ let createElements = function (nodes) {
     .attr('fill', 'steelblue')
     .attr('class', 'node')
     .attr('r', nodeRadius)
+
+    // show the index of each user
+    svg.append('text')
+      .text(node.index)
+      .attr('x', (node.index < 10) ? node.x - 4 : node.x - 8)
+      .attr('y', node.y + 4)
   })
 }
 
@@ -68,7 +76,7 @@ let drawOrbits = function () {
     let thisShellCapacity = capacities[OrbitNumber] ? capacities[OrbitNumber] : 18 + OrbitNumber * 5
     // in case there are more spaces in this orbit than people to fill it
     let nodesInShell = (thisShellCapacity > num) ? num : thisShellCapacity
-    draw(nodesInShell, OrbitNumber)
+    draw(nodesInShell, OrbitNumber, counter)
     num -= thisShellCapacity
     OrbitNumber++
   }
