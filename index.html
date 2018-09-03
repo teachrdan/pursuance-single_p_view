@@ -31,13 +31,16 @@ input {
   <form>
     <div id="selection-bar" style="width: 100%">
       <label>Number of Users:</label>
-      <input type="number" id="num-users" class="selector" value=20>
+      <input type="number" id="num-users" class="generic-selector" value=20>
 
       <label>User Radius:</label>
-      <input type="number" id="user-radius" class="selector" value=5>
+      <input type="number" id="user-radius" class="generic-selector" value=5>
 
       <label>Pursuance Radius:</label>
-      <input type="number" id="pursuance-radius" class="selector" value=75>
+      <input type="number" id="pursuance-radius" class="pursuance-selector" value=75>
+
+      <label>First Orbit Distance:</label>
+      <input type="number" id="first-orbit-radius" class="generic-selector" value=100>
     </form>
   </div>
   <div id='canvas'></div>
