@@ -64,9 +64,10 @@ let drawOrbits = function () {
   let shellNumber = 0
 
   while (num > 0 && shellNumber < 10) {
-    let thisShellCapacity = capacities[shellNumber] ? capacities[shellNumber] : 5 * shellNumber
-    let numNodes = (thisShellCapacity > num) ? thisShellCapacity : num
-    draw(numNodes, shellNumber)
+    let thisShellCapacity = capacities[shellNumber] ? capacities[shellNumber] : 18 + shellNumber * 5
+    // in case there are more spaces in this orbit than people to fill it
+    let nodesInShell = (thisShellCapacity > num) ? num : thisShellCapacity
+    draw(nodesInShell, shellNumber)
     num -= thisShellCapacity
     shellNumber++
   }
