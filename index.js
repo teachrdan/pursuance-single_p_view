@@ -1,4 +1,3 @@
-const d3 = require('d3')
 window.d3 = d3
 // from "Placing n elements around a circle with radius r"
 // http://bl.ocks.org/bycoffe/3404776
