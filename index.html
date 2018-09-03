@@ -8,29 +8,38 @@
 	<meta name="author" content="Dan Tennery-Spalding">
 </head>
 <style>
+label {
+  font-size: 18px;
+  font-family: helvetica;
+}
+input {
+  font-size: 16px;
+  width: 50px;
+  margin-right: 30px;
+}
 .node circle {
   fill: #fff;
   stroke: steelblue;
   stroke-width: 3px;
 }
-
 .node text {
   font: 12px sans-serif;
-}
-
-.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 2px;
-}
-
-#tree-container {
-  height: 100vh;
-  width: 100%;
 }
 </style>
 <body>
 	<h1>Single Pursuance View</h1>
+  <form>
+    <div id="selection-bar" style="width: 100%">
+      <label>Number of Users:</label>
+      <input type="number" id="num-users" class="selector" value=20>
+
+      <label>User Radius:</label>
+      <input type="number" id="user-radius" class="selector" value=5>
+
+      <label>Pursuance Radius:</label>
+      <input type="number" id="pursuance-radius" class="selector" value=75>
+    </form>
+  </div>
   <div id='canvas'></div>
 	<script src="index.js" type="text/javascript"></script>
 </body>

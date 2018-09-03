@@ -1,12 +1,11 @@
 const d3 = require('d3')
-
+window.d3 = d3
 // from "Placing n elements around a circle with radius r"
 // http://bl.ocks.org/bycoffe/3404776
 // magic numbers, all in pixels
+let pursuanceRadius = parseInt(document.getElementById('pursuance-radius').value) || 75
 let distanceBetweenShells = 30
 const height = 750
-let nodeRadius = 5 // pixels
-let pursuanceRadius = 70 // pixels
 let firstShellRadius = 100
 const width = 1000
 
@@ -39,12 +38,14 @@ let createNodes = function (numNodes, shellNumber) {
 }
 
 let createElements = function (nodes) {
+  let nodeRadius = parseInt(document.getElementById('user-radius').value)
   nodes.forEach(node => {
     svg.append('svg:circle')
-    .attr('r', nodeRadius)
     .attr('cx', node.x)
     .attr('cy', node.y)
     .attr('fill', 'steelblue')
+    .attr('class', 'node')
+    .attr('r', nodeRadius)
   })
 }
 
@@ -53,19 +54,25 @@ let draw = function (numNodes, shellNumber) {
   createElements(nodes, shellNumber)
 }
 
-// magic number
-
-let drawOrbits = function (numNodes) {
+let drawOrbits = function () {
+  d3.selectAll('.node').remove()
+  num = parseInt(document.getElementById('num-users').value)
   let capacities = [2, 8, 10, 14, 18]
-  let num = numNodes
   let shellNumber = 0
 
   while (num > 0 && shellNumber < 10) {
     let thisShellCapacity = capacities[shellNumber] ? capacities[shellNumber] : 5 * shellNumber
-    draw(thisShellCapacity, shellNumber)
+    let numNodes = (thisShellCapacity > num) ? thisShellCapacity : num
+    draw(numNodes, shellNumber)
     num -= thisShellCapacity
     shellNumber++
   }
 }
 
-drawOrbits(200)
+drawOrbits()
+
+d3.selectAll('.selector')
+  .on('input', function() {
+    console.log("here");
+    drawOrbits()
+  })
