@@ -2,10 +2,13 @@
 window.d3 = d3
 // from "Placing n elements around a circle with radius r"
 // http://bl.ocks.org/bycoffe/3404776
-// magic numbers, all in pixels
-const height = 750
-const width = 1000
-let counter = 1
+
+let counter
+// magic numbers
+const height = 750 // pixels
+const width = 1000 // pixels
+const pOpacity = 0.8
+const uOpacity = 0.8
 
 // append the svg object to the page
 let svg = d3.select('#canvas').append('svg:svg')
@@ -21,6 +24,7 @@ const drawPursuance = function () {
     .attr('cx', width / 2)
     .attr('cy', height / 2)
     .attr('fill', 'red')
+    .attr('opacity', pOpacity)
 }
 
 let createNodes = function (numNodes, OrbitNumber) {
@@ -52,6 +56,7 @@ let createElements = function (nodes) {
     .attr('fill', 'steelblue')
     .attr('class', 'node')
     .attr('r', nodeRadius)
+    .attr('opacity', uOpacity)
 
     // show the index of each user
     svg.append('text')
@@ -68,6 +73,8 @@ let draw = function (numNodes, OrbitNumber) {
 
 let drawOrbits = function () {
   d3.selectAll('.node').remove()
+  d3.selectAll('text').remove()
+  counter = 1
   let num = parseInt(document.getElementById('num-users').value)
   let capacities = [2, 8, 10, 14, 18]
   let OrbitNumber = 0
