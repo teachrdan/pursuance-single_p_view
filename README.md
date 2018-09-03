@@ -1,2 +1,2 @@
-# pursuance-single_p_view
-Iterations on the Single Pursuance View for the Pursuance Project
+# pursuance_invite_tree
+Iterations on the Invite Tree View for the Pursuance Project
