@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Pursuance Invite View</title>
+  <title>Single Pursuance View</title>
 	<meta name="description" content="The view of a single pursuance">
 	<meta name="author" content="Dan Tennery-Spalding">
 </head>
@@ -18,6 +18,12 @@ input {
   padding-left: 5px;
   width: 40px;
 }
+.density-text {
+  font-size: 18px;
+}
+.orbit-density {
+  margin-right: 5px;
+}
 .node circle {
   fill: #fff;
   stroke: steelblue;
@@ -28,7 +34,11 @@ input {
 }
 </style>
 <body>
-	<h1>Single Pursuance View</h1>
+	<h1>BETA: Sample Single Pursuance View</h1>
+  <div style="font-size: 26px">
+    This is a space to experiment with how the single pursuance view MIGHT look.<br>
+    Please play with the different values to create a view that will be useful and beautiful!<br><br>
+  </div>
   <form>
     <div id="selection-bar" style="width: 100%">
       <label>Number of Users:</label>
@@ -46,6 +56,8 @@ input {
       <label>Orbit Spacing:</label>
       <input type="number" id="distance-between-orbits" class="generic-selector" value=70>
 
+      <input type=radio class="orbit-density" value="low" name="density" checked><span class="density-text">Low Density</span>
+      <input type=radio class="orbit-density" value="high" name="density"><span class="density-text">High Density</span>
     </form>
   </div>
   <div id='canvas'></div>

@@ -5,6 +5,9 @@ window.d3 = d3
 
 let counter
 // magic numbers
+const maxFirstOrbit = 8
+let defaultCapacities = [2, 8, 10, 14, 18] // number of users per orbit
+let highCapacities = [8, 14, 24, 36, 50] // number of users per orbit
 const height = 750 // pixels
 const width = 1000 // pixels
 const pOpacity = 0.8
@@ -74,10 +77,11 @@ let draw = function (numNodes, OrbitNumber) {
 let drawOrbits = function () {
   d3.selectAll('.node').remove()
   d3.selectAll('text').remove()
-  counter = 1
-  let num = parseInt(document.getElementById('num-users').value)
-  let capacities = [2, 8, 10, 14, 18]
   let OrbitNumber = 0
+  let num = parseInt(document.getElementById('num-users').value)
+  let density = d3.select('input[name="density"]:checked').node().value
+  const capacities = (density === 'high') ? highCapacities : defaultCapacities
+  counter = 1
 
   while (num > 0 && OrbitNumber < 10) {
     let thisShellCapacity = capacities[OrbitNumber] ? capacities[OrbitNumber] : 18 + OrbitNumber * 5
@@ -97,3 +101,8 @@ d3.selectAll('.generic-selector')
 
 d3.selectAll('.pursuance-selector')
   .on('input', () => { drawPursuance() })
+
+d3.selectAll('.orbit-density')
+  .on('input', () => {
+    drawOrbits()
+  })
