@@ -13,6 +13,43 @@ const width = 1000 // pixels
 const pOpacity = 0.8
 const uOpacity = 0.8
 
+// helper function to create mock user data
+const createUser = function (nodeData) {
+  let node = Object.assign({}, nodeData)
+  const hashChars = '0123456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ'
+  const firstNames = ['Babette', 'Ellan', 'Rusty', 'Lilliam', 'Charlena', 'Denna', 'Francine', 'Teena', 'Marline', 'Raelene', 'Georgene', 'Sarita', 'Abe', 'Garnett', 'Lianne', 'Lillia', 'Charleen', 'Luetta', 'Bertie', 'Louie', 'Leida', 'Lacy', 'Kaye', 'Dede', 'Providencia', 'Hye', 'Nicol', 'Myriam', 'Maybelle', 'Agnes', 'Jenny', 'Derrick', 'Willetta', 'Cinda', 'Trudi', 'Johnsie', 'Rodney', 'Soon', 'Dovie', 'Micki', 'Carla', 'Marjory', 'Ella', 'Jasmin', 'Theressa', 'Barabara', 'Yu', 'Mariana', 'Fernande', 'Pearle']
+  const lastNames = ['Clutter', 'Curiel', 'Cambre', 'Heilman', 'Riding', 'Hutchison', 'Kamerer', 'Rogge', 'Culbert', 'Tinner', 'Dustin', 'Mccullough', 'Korb', 'Carls', 'Rybak', 'Vetrano', 'Auton', 'Tremper', 'Bredeson', 'Spaeth', 'Sasaki', 'Zinn', 'Hoerr', 'Kirsch', 'Pippins', 'Ines', 'Belair', 'Ostrow', 'Beamer', 'Brodsky', 'Musser', 'Threadgill', 'Traughber', 'Mcduffee', 'Rohrbaugh', 'Wrench', 'Delahoussaye', 'Wilkes', 'Kearley', 'Klahn', 'Bramblett', 'Marrin', 'Eury', 'Sluder', 'Weidman', 'Shoffner', 'Finklea', 'Linkous', 'Kriger', 'Terrio']
+  const lorem = ['Lorem', 'ipsum', 'dolor', 'amet', 'chicharrones', 'af', 'occupy', 'truffaut', 'mlkshk', 'succulents', 'intelligentsia', 'Adaptogen', 'master', 'cleanse', 'helvetica', 'raclette', 'Neutra', 'cred', 'lo-fi', 'flexitarian', 'Cred', 'XOXO', 'woke', 'tacos', 'meditation', 'drinking', 'vinegar', 'vegan', 'put', 'a', 'bird', 'on', 'it', 'jean', 'shorts', 'etsy', 'poke', 'man', 'braid', 'Squid', 'jianbing', 'af', 'master', 'cleanse', 'Meggings', 'street', 'art', 'VHS', 'pop-up', 'ramps', 'woke', 'hexagon', 'kinfolk', 'Paleo', 'air', 'plant', 'bespoke', 'blog', 'heirloom', 'ramps', 'coloring', 'book', 'selvage', 'tbh', 'affogato', 'selfies', 'single-origin', 'coffee', 'VHS', 'viral', 'taiyaki', 'hoodie', 'messenger', 'bag', 'actually', 'heirloom', 'Ramps', 'gluten-free', 'heirloom', 'scenester', 'authentic', 'messenger', 'bag', 'forage', 'Lo-fi', 'slow-carb', 'meh', 'irony', 'pabst', 'heirloom', 'hammock', 'gluten-free', 'brunch', 'sartorial', 'distillery', 'seitan']
+
+  // TODO create a helper function to check for duplicate hashes between all users
+  function createHash (len = 6) {
+    let hash = ''
+    for (let i = 0; i < len; i++) {
+      const hashChar = Math.floor(Math.random() * hashChars.length)
+      hash += hashChars[hashChar]
+    }
+    return hash
+  }
+
+  const firstNameIndex = Math.floor(Math.random() * firstNames.length)
+  const lastNameIndex = Math.floor(Math.random() * lastNames.length)
+  let bioLength = Math.floor(Math.random() * lorem.length)
+  bioLength = Math.max(5, bioLength)
+  // NOTE: 15% chance of being an admin
+  const isAdmin = (Math.random() * 100 < 15)
+
+  node.id = createHash()
+  node.bio = lorem.slice(0, bioLength).join(' ') + '.'
+  node.created = new Date()
+  node.daysOld = Math.round(Math.random() * 100)
+  node.isAdmin = isAdmin
+  node.firstName = firstNames[firstNameIndex]
+  node.lastName = lastNames[lastNameIndex]
+  node.pointsTodo = Math.floor(Math.random() * 10)
+  node.pointsDone = Math.floor(Math.random() * 100)
+  return node
+}
+
 // append the svg object to the page
 let svg = d3.select('#canvas').append('svg:svg')
   .attr('height', height)
@@ -33,6 +70,7 @@ const drawPursuance = function () {
 let createNodes = function (numNodes, OrbitNumber) {
   const firstOrbitRadius = parseInt(document.getElementById('first-orbit-radius').value)
   const distanceBetweenOrbits = parseInt(document.getElementById('distance-between-orbits').value)
+  let node = {}
   let nodes = []
   let angle
   let x
@@ -44,7 +82,7 @@ let createNodes = function (numNodes, OrbitNumber) {
     x = ((firstOrbitRadius + (distanceBetweenOrbits * OrbitNumber)) * Math.cos(angle)) + (width / 2)
      // Calculate the y position of the element.
     y = ((firstOrbitRadius + (distanceBetweenOrbits * OrbitNumber)) * Math.sin(angle)) + (height / 2)
-    nodes.push({'id': i, 'x': x, 'y': y, 'index': counter})
+    nodes.push(createUser({ 'id': i, 'x': x, 'y': y, 'index': counter }))
     counter++
   }
   return nodes
@@ -56,7 +94,7 @@ let createElements = function (nodes) {
     svg.append('svg:circle')
     .attr('cx', node.x)
     .attr('cy', node.y)
-    .attr('fill', 'steelblue')
+    .attr('fill', node.isAdmin ? 'red' : 'steelblue')
     .attr('class', 'node')
     .attr('r', nodeRadius)
     .attr('opacity', uOpacity)
@@ -66,6 +104,17 @@ let createElements = function (nodes) {
       .text(node.index)
       .attr('x', (node.index < 10) ? node.x - 4 : node.x - 8)
       .attr('y', node.y + 4)
+
+    // show the name of each user
+    svg.append('text')
+      .text(node.firstName)
+      .attr('x', node.x - nodeRadius + 3)
+      .attr('y', node.y + nodeRadius + 14)
+
+    svg.append('text')
+      .text(node.lastName)
+      .attr('x', node.x - nodeRadius + 3)
+      .attr('y', node.y + nodeRadius + 28)
   })
 }
 
@@ -95,6 +144,12 @@ let drawOrbits = function () {
 
 drawPursuance()
 drawOrbits()
+
+d3.selectAll('.node')
+  .on('mouseover', () => {
+    const user = d3.select(this)
+    console.log("user", user);
+  })
 
 d3.selectAll('.generic-selector')
   .on('input', () => { drawOrbits() })
