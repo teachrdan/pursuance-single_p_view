@@ -108,11 +108,13 @@ let createElements = function (nodes) {
     // show the name of each user
     svg.append('text')
       .text(node.firstName)
+      .attr('fill', node.daysOld < 25 ? 'lightgreen' : 'black')
       .attr('x', node.x - nodeRadius + 3)
       .attr('y', node.y + nodeRadius + 14)
 
     svg.append('text')
       .text(node.lastName)
+      .attr('fill', node.daysOld < 25 ? 'lightgreen' : 'black')
       .attr('x', node.x - nodeRadius + 3)
       .attr('y', node.y + nodeRadius + 28)
   })
