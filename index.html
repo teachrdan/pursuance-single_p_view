@@ -36,6 +36,7 @@ input {
   margin-right: 30px;
   padding-left: 5px;
   width: 40px;
+  border: none;
 }
 .density-text {
   font-size: 18px;
@@ -55,6 +56,12 @@ input {
   padding-top: 50px;
   display: none;
 }
+#selection-bar {
+  border: 1px solid #A9A9A9;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 #user-name {
   padding-top: 50px;
 
@@ -66,8 +73,8 @@ input {
     <i>This is a space to experiment with how the single pursuance view MIGHT look.<br>
     Please play with the different values to create a view that will be useful and beautiful!</i><br><br>
   </div>
-  <form>
-    <div id="selection-bar" style="width: 100%">
+  <div id="selection-bar">
+    <form>
       <label>Number of Users:</label>
       <input type="number" id="num-users" class="generic-selector" value=22>
 
@@ -83,8 +90,8 @@ input {
       <label>Orbit Spacing:</label>
       <input type="number" id="distance-between-orbits" class="generic-selector" value=80>
 
-      <input type=radio class="orbit-density" value="low" name="density" checked><span class="density-text">Low Density</span>
-      <input type=radio class="orbit-density" value="high" name="density"><span class="density-text">High Density</span>
+      <span class="density-text">Low Density</span><input type=radio class="orbit-density" value="low" name="density" checked>
+      <span class="density-text">High Density</span><input type=radio class="orbit-density" value="high" name="density">
     </form>
   </div>
   <div id="view-container">
