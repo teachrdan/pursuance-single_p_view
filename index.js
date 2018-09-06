@@ -91,19 +91,23 @@ let createNodes = function (numNodes, OrbitNumber) {
 let createElements = function (nodes) {
   let nodeRadius = parseInt(document.getElementById('user-radius').value)
   nodes.forEach(node => {
+    const fill = node.isAdmin ? 'red' : 'steelblue'
     svg.append('svg:circle')
-    .attr('cx', node.x)
-    .attr('cy', node.y)
-    .attr('fill', node.isAdmin ? 'red' : 'steelblue')
-    .attr('class', 'node')
-    .attr('r', nodeRadius)
-    .attr('opacity', uOpacity)
+      .attr('id', 'user' + node.id)
+      .attr('cx', node.x)
+      .attr('cy', node.y)
+      .attr('fill', fill)
+      .attr('class', 'node')
+      .attr('r', nodeRadius)
+      .attr('opacity', uOpacity)
+      .datum({ id: node.id, fill: fill })
 
     // show the index of each user
     svg.append('text')
       .text(node.index)
       .attr('x', (node.index < 10) ? node.x - 4 : node.x - 8)
       .attr('y', node.y + 4)
+      .style('pointer-events', 'none')
 
     // show the name of each user
     svg.append('text')
@@ -148,10 +152,17 @@ drawPursuance()
 drawOrbits()
 
 d3.selectAll('.node')
-  .on('mouseover', () => {
-    const user = d3.select(this)
-    console.log("user", user);
+  .on('mouseover', (d, i) => {
+    d3.select('#user' + d.id)
+      .attr('fill', 'green')
   })
+
+  d3.selectAll('.node')
+    .on('mouseout', (d, i) => {
+      d3.select('#user' + d.id)
+        .attr('fill', d.fill)
+    })
+
 
 d3.selectAll('.generic-selector')
   .on('input', () => { drawOrbits() })
