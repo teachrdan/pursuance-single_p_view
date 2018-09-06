@@ -1,17 +1,15 @@
 /* global d3 */
 window.d3 = d3
-// from "Placing n elements around a circle with radius r"
+// based loosely on "Placing n elements around a circle with radius r"
 // http://bl.ocks.org/bycoffe/3404776
-
 let counter
 // magic numbers
-const maxFirstOrbit = 8
-let defaultCapacities = [2, 8, 10, 14, 18] // number of users per orbit
+let defaultCapacities = [6, 10, 18, 28, 40] // number of users per orbit
 let highCapacities = [8, 14, 24, 36, 50] // number of users per orbit
 const height = 750 // pixels
 const width = 1000 // pixels
-const pOpacity = 0.8
-const uOpacity = 0.8
+const pOpacity = 0.8 // pursuance opacity, out of 1
+const uOpacity = 0.8 // user opacity, out of 1
 
 // helper function to create mock user data
 const createUser = function (nodeData) {
@@ -65,12 +63,16 @@ const drawPursuance = function () {
     .attr('cy', height / 2)
     .attr('fill', 'red')
     .attr('opacity', pOpacity)
+
+  svg.append('text')
+    .text('Sample Pursuance')
+    .attr('x', width / 2 - pursuanceRadius + 14)
+    .attr('y', height / 2 + 6)
 }
 
 let createNodes = function (numNodes, OrbitNumber) {
   const firstOrbitRadius = parseInt(document.getElementById('first-orbit-radius').value)
   const distanceBetweenOrbits = parseInt(document.getElementById('distance-between-orbits').value)
-  let node = {}
   let nodes = []
   let angle
   let x
@@ -82,7 +84,7 @@ let createNodes = function (numNodes, OrbitNumber) {
     x = ((firstOrbitRadius + (distanceBetweenOrbits * OrbitNumber)) * Math.cos(angle)) + (width / 2)
      // Calculate the y position of the element.
     y = ((firstOrbitRadius + (distanceBetweenOrbits * OrbitNumber)) * Math.sin(angle)) + (height / 2)
-    nodes.push(createUser({ 'id': i, 'x': x, 'y': y, 'index': counter }))
+    nodes.push(createUser({ 'x': x, 'y': y, 'index': counter }))
     counter++
   }
   return nodes
@@ -91,19 +93,20 @@ let createNodes = function (numNodes, OrbitNumber) {
 let createElements = function (nodes) {
   let nodeRadius = parseInt(document.getElementById('user-radius').value)
   nodes.forEach(node => {
-    const fill = node.isAdmin ? 'red' : 'steelblue'
+    node.fill = node.isAdmin ? 'red' : 'steelblue'
     svg.append('svg:circle')
       .attr('id', 'user' + node.id)
       .attr('cx', node.x)
       .attr('cy', node.y)
-      .attr('fill', fill)
+      .attr('fill', node.fill)
       .attr('class', 'node')
       .attr('r', nodeRadius)
       .attr('opacity', uOpacity)
-      .datum({ id: node.id, fill: fill })
+      .datum({ node: node })
 
     // show the index of each user
     svg.append('text')
+      .attr('class', 'user-text')
       .text(node.index)
       .attr('x', (node.index < 10) ? node.x - 4 : node.x - 8)
       .attr('y', node.y + 4)
@@ -111,12 +114,14 @@ let createElements = function (nodes) {
 
     // show the name of each user
     svg.append('text')
+      .attr('class', 'user-text')
       .text(node.firstName)
       .attr('fill', node.daysOld < 25 ? 'lightgreen' : 'black')
       .attr('x', node.x - nodeRadius + 3)
       .attr('y', node.y + nodeRadius + 14)
 
     svg.append('text')
+      .attr('class', 'user-text')
       .text(node.lastName)
       .attr('fill', node.daysOld < 25 ? 'lightgreen' : 'black')
       .attr('x', node.x - nodeRadius + 3)
@@ -131,7 +136,7 @@ let draw = function (numNodes, OrbitNumber) {
 
 let drawOrbits = function () {
   d3.selectAll('.node').remove()
-  d3.selectAll('text').remove()
+  d3.selectAll('.user-text').remove()
   let OrbitNumber = 0
   let num = parseInt(document.getElementById('num-users').value)
   let density = d3.select('input[name="density"]:checked').node().value
@@ -153,16 +158,36 @@ drawOrbits()
 
 d3.selectAll('.node')
   .on('mouseover', (d, i) => {
-    d3.select('#user' + d.id)
+    // TODO make node bigger, too
+    d3.select('#user' + d.node.id)
       .attr('fill', 'green')
+
+    d3.select('#portrait-container')
+      .style('display', 'inline')
+
+    d3.select('#user-name')
+      .append('div')
+      .text(d.node.firstName + ' ' + d.node.lastName)
+      .style('font-size', '28px')
+
+    d3.select('#bio-container')
+      .append('div')
+      .text(d.node.bio)
+      .attr('id', 'bio-text')
+      .style('font-size', '18px')
   })
 
-  d3.selectAll('.node')
-    .on('mouseout', (d, i) => {
-      d3.select('#user' + d.id)
-        .attr('fill', d.fill)
-    })
+d3.selectAll('.node')
+  .on('mouseout', (d, i) => {
+    d3.select('#user' + d.node.id)
+      .attr('fill', d.node.fill)
 
+    d3.select('#portrait-container')
+      .style('display', 'none')
+
+    d3.selectAll('#user-name').text('')
+    d3.selectAll('#bio-text').text('')
+  })
 
 d3.selectAll('.generic-selector')
   .on('input', () => { drawOrbits() })
