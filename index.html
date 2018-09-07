@@ -10,7 +10,7 @@
 <style>
 #bio-container {
   font-size: 16px;
-  padding-top: 30px;
+  padding-top: 20px;
   padding-right: 50px;
 }
 #canvas {
@@ -52,9 +52,11 @@ input {
 .node text {
   font: 12px sans-serif;
 }
+#portrait {
+  max-height: 300px;
+}
 #portrait-container {
   padding-top: 50px;
-  display: none;
 }
 #selection-bar {
   border: 1px solid #A9A9A9;
@@ -63,8 +65,10 @@ input {
   padding-right: 10px;
 }
 #user-name {
-  padding-top: 50px;
-
+  padding-top: 40px;
+}
+.user-text {
+  font-size: 18px;
 }
 </style>
 <body>
@@ -98,7 +102,7 @@ input {
     <div id='canvas'></div>
     <div id='detail-container' style-"height: 100vh">
       <div id='portrait-container'>
-        <img src="./resources/louise.png">
+        <img id='portrait' src="">
       </div>
       <div id='user-name'></div>
       <div id='bio-container'></div>

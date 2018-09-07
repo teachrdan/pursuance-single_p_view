@@ -9,7 +9,7 @@ let highCapacities = [8, 14, 24, 36, 50] // number of users per orbit
 const height = 750 // pixels
 const width = 1000 // pixels
 const pOpacity = 0.8 // pursuance opacity, out of 1
-const uOpacity = 0.8 // user opacity, out of 1
+const uOpacity = 0.7 // user opacity, out of 1
 
 // helper function to create mock user data
 const createUser = function (nodeData) {
@@ -116,14 +116,14 @@ let createElements = function (nodes) {
     svg.append('text')
       .attr('class', 'user-text')
       .text(node.firstName)
-      .attr('fill', node.daysOld < 25 ? 'lightgreen' : 'black')
+      .attr('fill', node.daysOld < 25 ? '#3c963c' : '#828282')
       .attr('x', node.x - nodeRadius + 3)
       .attr('y', node.y + nodeRadius + 14)
 
     svg.append('text')
       .attr('class', 'user-text')
       .text(node.lastName)
-      .attr('fill', node.daysOld < 25 ? 'lightgreen' : 'black')
+      .attr('fill', node.daysOld < 25 ? '#3c963c' : '#828282')
       .attr('x', node.x - nodeRadius + 3)
       .attr('y', node.y + nodeRadius + 28)
   })
@@ -153,49 +153,60 @@ let drawOrbits = function () {
   }
 }
 
-drawPursuance()
-drawOrbits()
-
-d3.selectAll('.node')
-  .on('mouseover', (d, i) => {
-    // TODO make node bigger, too
-    d3.select('#user' + d.node.id)
+const attachListeners = function () {
+  d3.selectAll('.node')
+    .on('mouseover', (d, i) => {
+      // TODO make node bigger, too
+      // TODO choose a different highlight color / technique
+      d3.select('#user' + d.node.id)
       .attr('fill', 'green')
 
-    d3.select('#portrait-container')
-      .style('display', 'inline')
+      // make its own function
+      d3.select('#portrait-container')
+      .style('display', 'inline-block')
+      d3.select('#portrait')
+      .attr('src', './resources/lowres_photos/' + i + '.jpg')
 
-    d3.select('#user-name')
+      d3.select('#user-name')
       .append('div')
       .text(d.node.firstName + ' ' + d.node.lastName)
       .style('font-size', '28px')
 
-    d3.select('#bio-container')
+      d3.select('#bio-container')
       .append('div')
       .text(d.node.bio)
       .attr('id', 'bio-text')
       .style('font-size', '18px')
   })
 
-d3.selectAll('.node')
-  .on('mouseout', (d, i) => {
-    d3.select('#user' + d.node.id)
+  d3.selectAll('.node')
+    .on('mouseout', (d, i) => {
+      d3.select('#user' + d.node.id)
       .attr('fill', d.node.fill)
 
-    d3.select('#portrait-container')
+      d3.select('#portrait-container')
       .style('display', 'none')
 
-    d3.selectAll('#user-name').text('')
-    d3.selectAll('#bio-text').text('')
-  })
+      d3.selectAll('#user-name').text('')
+      d3.selectAll('#bio-text').text('')
+    })
 
-d3.selectAll('.generic-selector')
-  .on('input', () => { drawOrbits() })
+  d3.selectAll('.generic-selector')
+    .on('input', () => {
+      drawOrbits()
+      attachListeners()
+    })
 
-d3.selectAll('.pursuance-selector')
-  .on('input', () => { drawPursuance() })
+  d3.selectAll('.pursuance-selector')
+    .on('input', () => { drawPursuance() })
 
-d3.selectAll('.orbit-density')
-  .on('input', () => {
-    drawOrbits()
-  })
+  d3.selectAll('.orbit-density')
+    .on('input', () => {
+      drawOrbits()
+      attachListeners()
+    })
+}
+
+drawPursuance()
+drawOrbits()
+attachListeners()
