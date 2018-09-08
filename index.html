@@ -8,6 +8,9 @@
 	<meta name="author" content="Dan Tennery-Spalding">
 </head>
 <style>
+.active-mode {
+  background-color: #555555;
+}
 #bio-container {
   font-size: 16px;
   padding-top: 20px;
@@ -16,20 +19,19 @@
 #canvas {
   float: left;
   display: inline-block;
-  width: 66%;
+  width: 60%;
 }
-#view-container {
-  height: 100vh;
-  width: 100vw;
+.center-selector {
+  border-left: 1px solid #A9A9A9;
+  border-right: 1px solid #A9A9A9;
+}
+.density-text {
+  font-size: 18px;
 }
 #detail-container {
   display: inline-block;
-  width: 33%;
+  width: 20%;
   height: 100vh;
-}
-label {
-  font-size: 16px;
-  font-family: helvetica;
 }
 input {
   font-size: 14px;
@@ -38,8 +40,19 @@ input {
   width: 40px;
   border: none;
 }
-.density-text {
-  font-size: 18px;
+#mode-selection-bar {
+  border: 1px solid #A9A9A9;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+label {
+  font-size: 16px;
+  font-family: helvetica;
+}
+.mode-selector {
+  display: inline-block;
+  text-align: center;
+  width: 30%;
 }
 .orbit-density {
   margin-right: 5px;
@@ -58,7 +71,12 @@ input {
 #portrait-container {
   padding-top: 50px;
 }
-#selection-bar {
+#pursuance-info-container {
+  display: inline-block;
+  float: left;
+  width: 20%;
+}
+#view-selection-bar {
   border: 1px solid #A9A9A9;
   border-radius: 5px;
   padding-left: 10px;
@@ -70,6 +88,10 @@ input {
 .user-text {
   font-size: 18px;
 }
+#view-container {
+  height: 100vh;
+  width: 100vw;
+}
 </style>
 <body>
 	<h1>BETA: Sample Single Pursuance View</h1>
@@ -77,7 +99,7 @@ input {
     <i>This is a space to experiment with how the single pursuance view MIGHT look.<br>
     Please play with the different values to create a view that will be useful and beautiful!</i><br><br>
   </div>
-  <div id="selection-bar">
+  <div id="view-selection-bar">
     <form>
       <label>Number of Users:</label>
       <input type="number" id="num-users" class="generic-selector" value=22>
@@ -99,6 +121,19 @@ input {
     </form>
   </div>
   <div id="view-container">
+    <div id='pursuance-info-container'>
+      <h1>Pursuance Name</h1>
+      <div id="mode-selection-bar">
+        <div id="alpha" class="mode-selector active-mode">A-Z</div>
+        <div id="points" class="mode-selector center-selector">Points</div>
+        <div id="admin" class="mode-selector">Admin</div>
+      </div>
+      <div>
+        <b>Location</b> Dallas, Texas, USA<br><br>
+        <b>Created</b> 1 January 2018<br><br>
+        <b>This pursuance's mission is to</b> lorem ipsum dolor amet chicharrones af occupy truffaut mlkshk succulents intelligentsia Adaptogen master cleanse helvetica raclette Neutra cred lo-fi flexitarian Cred XOXO woke tacos meditation drinking vinegar vegan put a bird on it jean shorts etsy poke man braid af master cleanse Meggings street art VHS pop-up ramps woke kinfolk Paleo air plant bespoke blog heirloom ramps coloring book selvage tbh affogato selfies single-origin coffee viral taiyaki hoodie messenger bag actually heirloom Ramps gluten-free heirloom scenester authentic messenger bag forage slow-carb meh irony pabst heirloom hammock brunch sartorial distillery seitan.
+      </div>
+    </div>
     <div id='canvas'></div>
     <div id='detail-container' style-"height: 100vh">
       <div id='portrait-container'>
