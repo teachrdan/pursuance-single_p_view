@@ -40,6 +40,17 @@ const drawPursuance = function () {
 let createNodes = function (numNodes, OrbitNumber) {
   const firstOrbitRadius = parseInt(document.getElementById('first-orbit-radius').value)
   const distanceBetweenOrbits = parseInt(document.getElementById('distance-between-orbits').value)
+  // draw the orbit
+  // TODO change this depending on mode
+  svg.append('svg:circle')
+    .attr('class', 'orbit')
+    .attr('r', firstOrbitRadius + (distanceBetweenOrbits * OrbitNumber))
+    .attr('cx', width / 2)
+    .attr('cy', height / 2)
+    .attr('fill', 'none')
+    .attr('stroke', 'blue')
+    .attr('opacity', uOpacity)
+
   let nodes = []
   let angle
   for (let i = 0; i < numNodes; i++) {
@@ -58,7 +69,6 @@ let createNodes = function (numNodes, OrbitNumber) {
 }
 
 let createElements = function (nodes) {
-  // TODO draw the orbits
   let nodeRadius = parseInt(document.getElementById('user-radius').value)
   nodes.forEach(node => {
     node.fill = node.isAdmin ? 'red' : 'steelblue'
@@ -118,6 +128,7 @@ let drawOrbits = function () {
   counter = 0
   d3.selectAll('.node').remove()
   d3.selectAll('.user-text').remove()
+  d3.selectAll('.orbit').remove()
   let OrbitNumber = 0
   let density = d3.select('input[name="density"]:checked').node().value
   const capacities = (density === 'high') ? highCapacities : lowCapacities
@@ -143,6 +154,9 @@ const attachListeners = function () {
       attachListeners()
     })
 
+  // TODO make a click version of this
+    // add a class for full or empty as a bootleg store
+    // toggle based on that value
   d3.selectAll('.node')
     .on('mouseover', (d, i) => {
       // TODO make node bigger, too
