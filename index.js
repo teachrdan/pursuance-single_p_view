@@ -99,6 +99,7 @@ let draw = function (numNodes, OrbitNumber) {
 }
 
 let drawOrbits = function () {
+  counter = 0
   d3.selectAll('.node').remove()
   d3.selectAll('.user-text').remove()
   let OrbitNumber = 0
