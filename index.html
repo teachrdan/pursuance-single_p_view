@@ -12,9 +12,9 @@
   background-color: #555555;
 }
 #bio-container {
-  font-size: 16px;
+  display: none;
+  font-size: 18px;
   padding-top: 20px;
-  padding-right: 50px;
 }
 #canvas {
   float: left;
@@ -27,11 +27,6 @@
 }
 .density-text {
   font-size: 18px;
-}
-#detail-container {
-  display: inline-block;
-  width: 20%;
-  height: 100vh;
 }
 input {
   font-size: 14px;
@@ -59,7 +54,6 @@ label {
 }
 .node circle {
   fill: #fff;
-  stroke: steelblue;
   stroke-width: 3px;
 }
 .node text {
@@ -67,20 +61,21 @@ label {
 }
 #portrait {
   max-height: 300px;
+  max-width: 200px;
 }
 #portrait-container {
   padding-top: 50px;
 }
-#pursuance-info-container {
+#pursuance-detail-container {
   display: inline-block;
   float: left;
+  /* padding-left: 50px; */
   width: 20%;
 }
-#view-selection-bar {
-  border: 1px solid #A9A9A9;
-  border-radius: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+#user-detail-container {
+  display: inline-block;
+  height: 100vh;
+  width: 20%;
 }
 #user-name {
   padding-top: 40px;
@@ -91,6 +86,12 @@ label {
 #view-container {
   height: 100vh;
   width: 100vw;
+}
+#view-selection-bar {
+  border: 1px solid #A9A9A9;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 </style>
 <body>
@@ -121,7 +122,7 @@ label {
     </form>
   </div>
   <div id="view-container">
-    <div id='pursuance-info-container'>
+    <div id='pursuance-detail-container'>
       <h1>Pursuance Name</h1>
       <div id="mode-selection-bar">
         <div id="alpha" class="mode-selector active-mode">A-Z</div>
@@ -135,12 +136,14 @@ label {
       </div>
     </div>
     <div id='canvas'></div>
-    <div id='detail-container' style-"height: 100vh">
+    <div id='user-detail-container' style-"height: 100vh">
       <div id='portrait-container'>
         <img id='portrait' src="">
       </div>
       <div id='user-name'></div>
-      <div id='bio-container'></div>
+      <div id='bio-container'>
+        lorem ipsum dolor amet chicharrones af occupy truffaut mlkshk succulents intelligentsia Adaptogen master cleanse helvetica raclette Neutra cred lo-fi flexitarian Cred XOXO woke tacos meditation drinking vinegar vegan put a bird on it jean shorts etsy poke man braid af master cleanse Meggings street art VHS pop-up ramps woke kinfolk Paleo air plant bespoke blog heirloom ramps coloring book selvage tbh affogato selfies single-origin coffee viral taiyaki hoodie messenger bag actually heirloom Ramps gluten-free heirloom scenester authentic messenger bag forage slow-carb meh irony pabst heirloom hammock brunch sartorial distillery seitan.
+      </div>
     </div>
   </div>
   <script src="https://d3js.org/d3.v5.min.js"></script>
