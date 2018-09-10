@@ -30,9 +30,18 @@ const drawPursuance = function () {
     .attr('opacity', pOpacity)
 
   svg.append('text')
-    .text('Sample Pursuance')
-    .attr('x', width / 2 - pursuanceRadius + 14)
-    .attr('y', height / 2 + 6)
+    .text('Net Neutrality')
+    .attr('font-family', 'Helvetica')
+    .style('font-size', '20px')
+    .attr('x', width / 2 - pursuanceRadius + 12)
+    .attr('y', height / 2)
+
+  svg.append('text')
+    .text('for Oakland')
+    .attr('font-family', 'Helvetica')
+    .style('font-size', '20px')
+    .attr('x', width / 2 - pursuanceRadius + 22)
+    .attr('y', height / 2 + 24)
 }
 
 let createNodes = function (numNodes, OrbitNumber) {
@@ -87,14 +96,14 @@ let createElements = function (nodes) {
     // show circle text for each user
     const mode = d3.select('.active-mode').attr('id')
     const circleNumber = (mode === 'points') ? node.pointsDone : node.index
-    const numberX = (circleNumber < 10) ? node.x - 4 : (circleNumber < 100) ? node.x - 8 : node.x - 12
+    const numberX = (circleNumber < 10) ? node.x - 4 : (circleNumber < 100) ? node.x - 11 : node.x - 12
     svg.append('text')
-      .attr('font-family', 'sans-serif')
+      .attr('font-family', 'monospace')
       .attr('class', 'user-text')
       .text(node.index)
       .attr('fill', 'white')
       .attr('x', numberX)
-      .attr('y', node.y + 4)
+      .attr('y', node.y + 5)
       .style('pointer-events', 'none')
 
     // show the name of each user
