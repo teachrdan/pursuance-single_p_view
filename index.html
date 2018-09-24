@@ -104,10 +104,8 @@ label {
 }
 </style>
 <body>
-	<h1>BETA: Sample Single Pursuance View</h1>
+	<h1>Single Pursuance Spiral View</h1>
   <div style="font-size: 20px; opacity: 0.8;">
-    <i>Please change values to create a view that's useful and beautiful!<br>
-    This is a space to experiment with how the single pursuance view MIGHT look.</i><br><br>
   </div>
   <div id="view-selection-bar">
     <form>
@@ -120,11 +118,11 @@ label {
       <label>Pursuance Radius:</label>
       <input type="number" id="pursuance-radius" class="pursuance-selector" value=75>
 
-      <label>Orbit Spacing:</label>
-      <input type="number" id="distance-between-lines" class="generic-selector" value=20>
+      <label>Spiral Spacing:</label>
+      <input type="number" id="distance-between-lines" class="generic-selector" value=1>
 
-      <span class="density-text">Low Density</span><input type=radio class="orbit-density" value="low" name="density" checked>
-      <span class="density-text">High Density</span><input type=radio class="orbit-density" value="high" name="density">
+      <label>Spiral Turns:</label>
+      <input type="number" id="number-spirals" class="generic-selector" value=3>
     </form>
   </div>
   <div id="view-container">
