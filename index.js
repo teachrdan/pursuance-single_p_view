@@ -20,7 +20,7 @@ let svg = d3.select('#canvas').append('svg:svg')
 
 const theta = (r) => numSpirals * Math.PI * r
 let lineDistance = parseInt(document.getElementById('distance-between-lines').value)
-let r = d3.min([width, height]) / 2 + (lineDistance * 5)
+let r = d3.min([width, height]) / 2 + (lineDistance * 0.1)
 let radius = d3.scaleLinear()
   .domain([start, end])
   .range([10, r])
@@ -44,7 +44,6 @@ const draw = function () {
   d3.selectAll('.orbit').remove()
   let numUsers = parseInt(document.getElementById('num-users').value)
   // TODO set max users?
-  // TODO fix sort function here
   const mode = d3.select('.active-mode').attr('id')
   let shownUsers = []
   if (mode === 'points') {
@@ -172,13 +171,13 @@ const attachListeners = function () {
 
   allNodes
     .on('click', (d) => {
-      const isClicked = d3.select('#user' + d.node.id).attr('class').includes('clicked')
+      const isClicked = d3.select('#user' + d.user.id).attr('class').includes('clicked')
       // if this node wasn't clicked already
       if (!isClicked) {
-        highlightNode(d.node.id)
-        setPortrait(d.node.portrait)
-        nameAndBio(d.node.firstName + ' ' + d.node.lastName)
-        d3.select('#user' + d.node.id).attr('class', 'node clicked')
+        highlightNode(d.user.id)
+        setPortrait(d.user.portrait)
+        nameAndBio(d.user.firstName + ' ' + d.user.lastName)
+        d3.select('#user' + d.user.id).attr('class', 'node clicked')
       } else {
         // if it (or anything else) was clicked, unclick it
         d3.selectAll('.clicked').attr('class', 'node')
@@ -193,9 +192,9 @@ const attachListeners = function () {
       // TODO choose a different highlight color / technique
       let anyNodeClicked = (d3.selectAll('.clicked').nodes().length > 0)
       if (!anyNodeClicked) {
-        highlightNode(d.node.id)
-        setPortrait(d.node.portrait)
-        nameAndBio(d.node.firstName + ' ' + d.node.lastName)
+        highlightNode(d.user.id)
+        setPortrait(d.user.portrait)
+        nameAndBio(d.user.firstName + ' ' + d.user.lastName)
       }
     })
 
@@ -206,7 +205,7 @@ const attachListeners = function () {
         d3.select('#portrait-container').style('display', 'none')
         d3.select('#user-name').text('')
         d3.select('#bio-container').style('display', 'none')
-        d3.select('#user' + d.node.id).attr('fill', d.node.fill)
+        d3.select('#user' + d.user.id).attr('fill', d.user.fill)
       }
     })
 
